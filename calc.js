@@ -26,15 +26,11 @@ function getFormattedNumber (num) {
         return "-";
     }
 
-    else if (num.endsWith(".")) {
-        var n = Number(num.substr(0, num.length-1));
-        var value = n.toLocaleString("en");
-        return value + ".";
-    }
-    else if (num.endsWith(".0")) {
-        var n = Number(num.substr(0, num.length-2));
-        var value = n.toLocaleString("en");
-        return value + ".0";
+    else if (num.includes(".")) {
+        var n = num.split(".");
+        var num1 = Number(n[0]);
+        var value = num1.toLocaleString("en");
+        return value + "." + n[1];
     }
     else{
         var n = Number(num);
@@ -45,12 +41,9 @@ function getFormattedNumber (num) {
 }
 
 function reverseFormattedNumber(num) {
-    if (num.endsWith(".")) {
-        return Number(num.replace(/,/g, ""))  + ".";
-    }
-
-    else if (num.endsWith(".0")) {
-        return Number(num.replace(/,/g, ""))  + ".0";
+    if (num.includes(".")) {
+        var n = num.split(".")
+        return Number(n[0].replace(/,/g, ""))  + "." + n[1];
     }
     else if (num == "-") {
         return "-";
@@ -77,7 +70,7 @@ for (var i = 0; i < operator.length; i++) {
             }
         }
 
-        else if (getOutput() == "" && this.id == "subtraction") {
+        else if (getOutput() == "" && this.id == "subtraction" && getHistory()=="") {
             output = "-";
             printOutput(output);
         }
